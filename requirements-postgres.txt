@@ -1,0 +1,2 @@
+# Нужно только для подключения к PostgreSQL
+psycopg2-binary>=2.9

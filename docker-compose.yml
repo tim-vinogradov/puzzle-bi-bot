@@ -1,0 +1,35 @@
+# Полный стенд: PostgreSQL + загрузка данных кейса + бот.
+# Запуск: docker compose up --build   → http://localhost:8000
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: puzzle
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d puzzle"]
+      interval: 3s
+      retries: 20
+    volumes: [pgdata:/var/lib/postgresql/data]
+
+  loader:
+    build: .
+    command: ["python", "-m", "app.loader", "--postgres", "postgresql://postgres:postgres@db:5432/puzzle"]
+    depends_on:
+      db: {condition: service_healthy}
+
+  bot:
+    build: .
+    environment:
+      DATABASE_URL: postgresql+psycopg2://bi_reader:bi_reader_pwd@db:5432/puzzle
+      APP_DB: /app/storage/app.db
+      # LLM_PROVIDER: gigachat
+      # GIGACHAT_AUTH_KEY: ...
+    ports: ["8000:8000"]
+    volumes: [botstorage:/app/storage]
+    depends_on:
+      loader: {condition: service_completed_successfully}
+
+volumes:
+  pgdata:
+  botstorage:

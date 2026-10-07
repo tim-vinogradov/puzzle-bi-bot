@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Puzzle BI-бот</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232a78d6'/%3E%3Crect x='7' y='17' width='4' height='8' rx='1.5' fill='white'/%3E%3Crect x='14' y='11' width='4' height='14' rx='1.5' fill='white'/%3E%3Crect x='21' y='7' width='4' height='18' rx='1.5' fill='white'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/static/vendor/tom-select.css">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="app" id="app">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="30" height="30"><rect width="32" height="32" rx="8" fill="#2a78d6"/><rect x="7" y="17" width="4" height="8" rx="1.5" fill="#fff"/><rect x="14" y="11" width="4" height="14" rx="1.5" fill="#fff"/><rect x="21" y="7" width="4" height="18" rx="1.5" fill="#fff"/></svg>
+        </div>
+        <div>
+          <div class="brand-name">Puzzle BI-бот</div>
+          <div class="brand-sub">ad-hoc аналитика в чате</div>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-block" id="newChat" type="button">＋ Новый диалог</button>
+      <div class="side-section">
+        <div class="side-head">
+          <span>Мои дашборды</span>
+          <select id="sideSort" class="mini-select" aria-label="Сортировка списка">
+            <option value="updated">по изменению</option>
+            <option value="created">по созданию</option>
+            <option value="name">по названию</option>
+          </select>
+        </div>
+        <input id="sideSearch" class="input" type="search" placeholder="Поиск по названию и запросу…" aria-label="Поиск дашбордов">
+        <div id="sideList" class="side-list"></div>
+      </div>
+      <div class="side-foot" id="status">Подключаюсь к базе…</div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-btn" id="toggleSide" type="button" aria-label="Показать список дашбордов">☰</button>
+        <div class="topbar-title" id="topTitle">Новый диалог</div>
+        <div class="topbar-actions">
+          <button class="btn btn-ghost" type="button" id="helpBtn">Что умеет бот</button>
+        </div>
+      </header>
+
+      <section class="chat" id="chat" aria-live="polite"></section>
+
+      <footer class="composer">
+        <div class="chips" id="chips"></div>
+        <form class="composer-box" id="form">
+          <textarea id="input" rows="1" placeholder="Спросите о данных: «Собери дашборд по продажам за последний год»" aria-label="Сообщение"></textarea>
+          <button class="send" id="send" type="submit" aria-label="Отправить">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path d="M4 12l16-8-6 16-2.5-6.5L4 12z" fill="currentColor"/></svg>
+          </button>
+        </form>
+        <div class="composer-hint">Enter — отправить, Shift+Enter — новая строка. Данные только читаются — бот ничего не меняет в базе.</div>
+      </footer>
+    </main>
+  </div>
+
+  <div class="share-shell" id="shareShell" hidden></div>
+  <div class="toast" id="toast" role="status" hidden></div>
+
+  <script src="/static/vendor/plotly.min.js"></script>
+  <script src="/static/plotly-locale-ru.js"></script>
+  <script src="/static/vendor/tom-select.complete.min.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>
